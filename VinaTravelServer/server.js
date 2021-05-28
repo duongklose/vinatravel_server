@@ -18,11 +18,15 @@ app.get('/', (req, res) => {
   res.send("Welcome to my web server");
 });
 
-// Require user routes
-const userRoutes = require('./src/routes/user.routes')
 
-// using as middleware
-app.use('/api/v1/users', userRoutes)
+
+/* 
+  Các routes
+ */
+//login
+require('./src/routes/login.routes')(app)
+
+
 
 // listen for requests
 app.listen(port, () => {

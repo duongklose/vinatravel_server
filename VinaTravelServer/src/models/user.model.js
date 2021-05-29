@@ -78,5 +78,18 @@ User.updateUser = function(id, phone, name, result){
     });
 }
 
+User.changePass = function(id, pass, result){
+  dbConn.query("UPDATE `users` SET `pass`='"+pass+"' WHERE id="+id+";", function (err, res) {
+    if(err) {
+      console.log("error: ", err);
+      result(null, err);
+    }
+    else{
+      console.log('users : ', res);
+      result(null, res);
+    }
+  });
+}
+
 
 module.exports= User;

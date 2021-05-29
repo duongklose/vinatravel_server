@@ -33,3 +33,30 @@ exports.updateUser = function(req, res) {
         }
       });
 };
+
+exports.changePass = function(req, res) {
+  User.getUserById(req.query.id, function(err, user) {
+      if (err)
+      res.send(err);
+      if(user.length != 1){
+          var data = {
+            "code":"1005",
+            "data":null,
+            "token":null
+          }
+          res.send(data);
+      }else{
+        User.changePass(req.query.id, req.query.pass, function(err, mRes) {
+          if (err)
+          res.send(err);
+          console.log('res', mRes);
+          var data = {
+              "code":"1000",
+              "data":null,
+              "token":null
+            }
+          res.send(data);
+        });
+      }
+    });
+};

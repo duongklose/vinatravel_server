@@ -25,6 +25,10 @@ app.get('/', (req, res) => {
  */
 //login
 require('./src/routes/login.routes')(app)
+//register
+require('./src/routes/register.routes')(app)
+//home
+require('./src/routes/home.routes')(app)
 
 
 

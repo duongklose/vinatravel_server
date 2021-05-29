@@ -12,21 +12,32 @@ exports.getAll = function(req, res) {
 };
 
 exports.checkLogin = function(req, res){
-  User.getUserByPhone(req.params.phone, function(err, user) {
+  User.getUserByPhone(req.query.phone, function(err, user) {
     if (err)
     res.send(err);
-    var resFail = {"message": "fail"};
-    var resSuccess = {"message": "success"};
     if(user.length == 1){
-      if(user[0].pass == req.params.pass){
-        user.unshift(resSuccess);
-        res.send(user);
-        console.log('res', user);
+      if(user[0].pass == req.query.pass){
+        var data = {
+          "code":"1000",
+          "data":user[0],
+          "token":null
+        }
+        res.send(data);
       }else{
-        res.send(resFail);
+        var data = {
+          "code":"1010",
+          "data":null,
+          "token":null
+        }
+        res.send(data);
       }
     }else{
-      res.send(resFail);
+      var data = {
+        "code":801,
+        "data":null,
+        "token":null
+      }
+      res.send(data);
     }
   });
 }

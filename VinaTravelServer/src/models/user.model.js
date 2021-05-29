@@ -39,4 +39,44 @@ User.getUserByPhone = function(phone, result){
   });
 }
 
+User.getUserById = function(id, result){
+  dbConn.query("Select * from users where id=" + id, function (err, res) {
+    if(err) {
+      console.log("error: ", err);
+      result(null, err);
+    }
+    else{
+      console.log('users : ', res);
+      result(null, res);
+    }
+  });
+}
+
+User.addUser = function(phone, pass, name, result){
+  dbConn.query("INSERT INTO `users`(`pass`, `phone`,`name`, `role`) VALUES ('"+pass+"','"+phone+"','"+name+"','user');", function (err, res) {
+    if(err) {
+      console.log("error: ", err);
+      result(null, err);
+    }
+    else{
+      console.log('users : ', res);
+      result(null, res);
+    }
+  });
+}
+
+User.updateUser = function(id, phone, name, result){
+    dbConn.query("UPDATE `users` SET `name`='"+name+"',`phone`='"+phone+"' WHERE id="+id+";", function (err, res) {
+      if(err) {
+        console.log("error: ", err);
+        result(null, err);
+      }
+      else{
+        console.log('users : ', res);
+        result(null, res);
+      }
+    });
+}
+
+
 module.exports= User;

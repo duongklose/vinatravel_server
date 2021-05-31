@@ -6,5 +6,8 @@ module.exports = function(router) {
 
     router.post('/updateInfo', homeController.updateUser);
     router.post('/changePass', homeController.changePass);
+    // router.get('/listProvince', homeController.getListProvince);
+    router.get('/getTrip', homeController.getTrip);
+    router.get('/getProvince', homeController.getProvinceByName);
 
 }

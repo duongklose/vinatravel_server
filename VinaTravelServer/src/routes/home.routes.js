@@ -9,5 +9,9 @@ module.exports = function(router) {
     // router.get('/listProvince', homeController.getListProvince);
     router.get('/getTrip', homeController.getTrip);
     router.get('/getProvince', homeController.getProvinceByName);
+    router.get('/getBookedSeats', homeController.getBookedSeats);
+    router.get('/getLocation', homeController.getLocationByName);
+    router.post('/addNewTicket', homeController.addNewTicket);
+    router.post('/completeBookTicket', homeController.completeBookTicket);
 
 }

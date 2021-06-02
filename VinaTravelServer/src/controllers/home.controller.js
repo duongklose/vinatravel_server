@@ -2,6 +2,9 @@
 var User = require('../models/user.model');
 var Province = require('../models/province.model');
 const Trip = require('../models/trip.model');
+var Seat = require('../models/seat.model');
+var Location = require('../models/location.model');
+var Ticket = require('../models/ticket.model');
 
 exports.updateUser = function(req, res) {
     User.getUserById(req.query.id, function(err, user) {
@@ -80,7 +83,49 @@ exports.getProvinceByName = function(req, res) {
     res.send(province);
   });
 };
+
+exports.getBookedSeats = function(req, res) {
+  Seat.getBookedSeats(req.query.idTrip, function(err, seats){
+    if (err)
+    res.send(err);
+    console.log('seat ', seats);
+    res.send(seats);
+  });
+};
   
+exports.getLocationByName = function(req, res) {
+  Location.getLocationByName(req.query.location, function(err, idLocation){
+    if(err)
+    res.send(err);
+    res.send(idLocation);
+  });
+};
+
+exports.addNewTicket = function(req, res){
+  Ticket.addNewTicket(req.query.idTrip, req.query.idUser, req.query.bookedDate, req.query.startLocation, req.query.endLocation, req.query.paymentMethod, req.query.price, req.query.detailStartLocation, req.query.detailEndLocation, function (err, mRes){
+    if (err)
+      res.send(err);
+    console.log('res', mRes);
+    var data = {
+        "code":"1000",
+        "data":mRes.insertId
+      }
+    res.send(data);
+  });
+}
+
+exports.completeBookTicket = function(req, res){
+  Ticket.completeBookTicket(req.query.idSeat, req.query.idTrip, req.query.idTicket, function(err, mRes){
+    if (err)
+      res.send(err);
+    console.log('res', mRes);
+    var data = {
+        "code":"1000",
+        "data":mRes.insertId
+      }
+    res.send(data);
+  })
+}
 
   //     User.changePass(req.query.id, req.query.pass, function(err, mRes) {
   //       if (err)

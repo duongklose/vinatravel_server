@@ -42,3 +42,6 @@ Ticket.completeBookTicket = function(idSeat, idTrip, idTicket, result){
 }
 
 module.exports = Ticket;
+
+// SELECT * FROM `tickets`
+// WHERE DATE(book_date)>'2021-06-03'

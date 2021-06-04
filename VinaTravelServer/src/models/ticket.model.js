@@ -41,6 +41,54 @@ Ticket.completeBookTicket = function(idSeat, idTrip, idTicket, result){
   })
 }
 
+Ticket.getMyTicket = function(idUser, date, result){
+  var select = "SELECT tickets.id as id, transportations.name as nameTransportationCompany, coaches.license_plate as licensePlate, tickets.book_date, l1.name as defaultStartLocation, l2.name as defaultEndLocation, tickets.detail_departure_location as startLocation, tickets.detail_arrival_location as endLocation, trips.departure_time as startTime, trips.arrival_time as endTime, trips.departure_time as d, tickets.price as price";
+  var from = " FROM tickets, trips, transportations, coaches, locations as l1, locations as l2";
+  var where = " WHERE id_user="+idUser+" AND trips.departure_time > '"+date+"' AND state='booked' AND tickets.id_trip=trips.id AND trips.id_transportation=transportations.id AND trips.id_coach=coaches.id AND tickets.start_location=l1.id AND tickets.end_location=l2.id";
+  var sql = select + from + where;
+  dbConn.query(sql, function(err, res){
+    if(err) {
+      console.log("error: ", err);
+      result(null, err);
+    }
+    else{
+      result(null, res);
+    }
+  });
+}
+
+Ticket.getOldTicket = function(idUser, date, result){
+  var select = "SELECT tickets.id as id, transportations.name as nameTransportationCompany, coaches.license_plate as licensePlate, tickets.book_date, l1.name as defaultStartLocation, l2.name as defaultEndLocation, tickets.detail_departure_location as startLocation, tickets.detail_arrival_location as endLocation, trips.departure_time as startTime, trips.arrival_time as endTime, trips.departure_time as d, tickets.price as price";
+  var from = " FROM tickets, trips, transportations, coaches, locations as l1, locations as l2";
+  var where = " WHERE id_user="+idUser+" AND trips.departure_time < '"+date+"' AND state='booked' AND tickets.id_trip=trips.id AND trips.id_transportation=transportations.id AND trips.id_coach=coaches.id AND tickets.start_location=l1.id AND tickets.end_location=l2.id";
+  var sql = select + from + where;
+  dbConn.query(sql, function(err, res){
+    if(err) {
+      console.log("error: ", err);
+      result(null, err);
+    }
+    else{
+      result(null, res);
+    }
+  });
+}
+
+Ticket.getCancelledTicket = function(idUser, result){
+  var select = "SELECT tickets.id as id, transportations.name as nameTransportationCompany, coaches.license_plate as licensePlate, tickets.book_date, l1.name as defaultStartLocation, l2.name as defaultEndLocation, tickets.detail_departure_location as startLocation, tickets.detail_arrival_location as endLocation, trips.departure_time as startTime, trips.arrival_time as endTime, trips.departure_time as d, tickets.price as price";
+  var from = " FROM tickets, trips, transportations, coaches, locations as l1, locations as l2";
+  var where = " WHERE id_user="+idUser+" AND state='cancelled' AND tickets.id_trip=trips.id AND trips.id_transportation=transportations.id AND trips.id_coach=coaches.id AND tickets.start_location=l1.id AND tickets.end_location=l2.id";
+  var sql = select + from + where;
+  dbConn.query(sql, function(err, res){
+    if(err) {
+      console.log("error: ", err);
+      result(null, err);
+    }
+    else{
+      result(null, res);
+    }
+  });
+}
+
 module.exports = Ticket;
 
 // SELECT * FROM `tickets`

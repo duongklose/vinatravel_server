@@ -13,5 +13,8 @@ module.exports = function(router) {
     router.get('/getLocation', homeController.getLocationByName);
     router.post('/addNewTicket', homeController.addNewTicket);
     router.post('/completeBookTicket', homeController.completeBookTicket);
+    router.get('/getMyTicket', homeController.getMyTicket);
+    router.get('/getOldTicket', homeController.getOldTicket);
+    router.get('/getCancelledTicket', homeController.getCancelledTicket);
 
 }

@@ -127,6 +127,42 @@ exports.completeBookTicket = function(req, res){
   })
 }
 
+exports.getMyTicket = function(req, res){
+  Ticket.getMyTicket(req.query.idUser, req.query.d, function(err, mRes){
+    if (err)
+      res.send(err);
+    var data = {
+        "code":"1000",
+        "data":mRes
+      }
+    res.send(data);
+  });
+}
+
+exports.getOldTicket = function(req, res){
+  Ticket.getOldTicket(req.query.idUser, req.query.d, function(err, mRes){
+    if (err)
+      res.send(err);
+    var data = {
+        "code":"1000",
+        "data":mRes
+      }
+    res.send(data);
+  });
+}
+
+exports.getCancelledTicket = function(req, res){
+  Ticket.getCancelledTicket(req.query.idUser, function(err, mRes){
+    if (err)
+      res.send(err);
+    var data = {
+        "code":"1000",
+        "data":mRes
+      }
+    res.send(data);
+  })
+}
+
   //     User.changePass(req.query.id, req.query.pass, function(err, mRes) {
   //       if (err)
   //       res.send(err);

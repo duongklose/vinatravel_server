@@ -89,6 +89,44 @@ Ticket.getCancelledTicket = function(idUser, result){
   });
 }
 
+Ticket.getSeatsByTicket = function(idTicket, result){
+  var sql = "SELECT seat_ticket_trip.id_seat, seats.name FROM seat_ticket_trip, seats WHERE seat_ticket_trip.id_seat=seats.id AND id_ticket=" + idTicket;
+  dbConn.query(sql, function(err, res){
+    if(err) {
+      console.log("error: ", err);
+      result(null, err);
+    }
+    else{
+      result(null, res);
+    }
+  })
+}
+
+Ticket.cancelTicket = function(idTicket, result){
+  var sql = "UPDATE tickets SET state='cancelled' WHERE id = "+idTicket;
+  dbConn.query(sql, function(err, res){
+    if(err) {
+      console.log("error: ", err);
+      result(null, err);
+    }
+    else{
+      result(null, res);
+    }
+  })
+}
+
+Ticket.deleteSeatsTicket = function(idTicket, result){
+  var sql = "DELETE FROM `seat_ticket_trip` WHERE id_ticket=" + idTicket;
+  dbConn.query(sql, function(err, res){
+    if(err) {
+      console.log("error: ", err);
+      result(null, err);
+    }
+    else{
+      result(null, res);
+    }
+  })
+}
 module.exports = Ticket;
 
 // SELECT * FROM `tickets`

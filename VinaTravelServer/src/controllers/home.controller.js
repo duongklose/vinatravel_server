@@ -163,6 +163,35 @@ exports.getCancelledTicket = function(req, res){
   })
 }
 
+exports.getSeatsByTicket = function(req, res){
+  Ticket.getSeatsByTicket(req.query.idTicket, function(err, mRes){
+    if (err)
+      res.send(err);
+    var data = {
+        "code":"1000",
+        "data":mRes
+      }
+    res.send(data);
+  })
+}
+
+exports.cancelTicket = function(req, res){
+  Ticket.cancelTicket(req.query.idTicket, function(err, mRes){
+    if (err){
+      res.send(err);
+    }else{
+      Ticket.deleteSeatsTicket(req.query.idTicket, function(err, mRe){
+        var data = {
+          "code":"1000",
+          "data":0
+        }
+        res.send(data);
+      })
+    }
+  });
+  
+}
+
   //     User.changePass(req.query.id, req.query.pass, function(err, mRes) {
   //       if (err)
   //       res.send(err);

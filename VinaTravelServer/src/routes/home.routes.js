@@ -16,5 +16,6 @@ module.exports = function(router) {
     router.get('/getMyTicket', homeController.getMyTicket);
     router.get('/getOldTicket', homeController.getOldTicket);
     router.get('/getCancelledTicket', homeController.getCancelledTicket);
-
+    router.get('/getSeatsByTicket', homeController.getSeatsByTicket);
+    router.get('/cancelTicket', homeController.cancelTicket);
 }
